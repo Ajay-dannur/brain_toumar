@@ -1,21 +1,17 @@
 import os
 import streamlit as st
+
+# ✅ Fix OpenCV Import Issue
+os.system("pip install --upgrade pip")
+os.system("pip install -q opencv-python-headless==4.6.0.66")
+
+# Now import OpenCV after installation
+import cv2
 import torch
 import numpy as np
-import cv2
+from yolov10.models import YOLO
 
-# ✅ Install YOLOv10 manually before importing
-os.system("pip install -q git+https://github.com/THU-MIG/yolov10.git")
-
-# ✅ Import YOLOv10 after installation
-try:
-    from yolov10.models import YOLO
-    print("✅ YOLOv10 imported successfully!")
-except ModuleNotFoundError:
-    st.error("❌ YOLOv10 not found. Please restart the app.")
-    exit()
-
-# ✅ Load the trained YOLOv10 model
+# Load the trained YOLOv10 model
 model = YOLO("best.onnx")  # Ensure best.onnx is in the same directory
 
 def detect_objects(image):
@@ -23,7 +19,7 @@ def detect_objects(image):
     result_img = results[0].plot()  # Draw bounding boxes
     return result_img
 
-# ✅ Streamlit UI
+# Streamlit UI
 st.title("🧠 Brain Tumor Detection with YOLOv10")
 st.write("Upload an MRI scan to detect brain tumors.")
 
