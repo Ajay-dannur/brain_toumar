@@ -2,4 +2,4 @@ streamlit
 torch
 torchvision
 numpy
-opencv-python
+opencv-python-headless==4.6.0.66  # Use a stable OpenCV version
